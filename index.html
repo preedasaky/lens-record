@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ระบบบันทึกค่าสายตา</title>
+  <style>
+    body {
+      font-family: 'Prompt', sans-serif;
+      margin: 0;
+      padding: 1rem;
+      background: #f3f6f9;
+      max-width: 800px;
+      margin: auto;
+    }
+    h2 {
+      text-align: center;
+      color: #006064;
+    }
+    .row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .col {
+      flex: 1;
+      min-width: 200px;
+    }
+    .triple-input {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .triple-input input {
+      flex: 1;
+      padding: 0.6rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+    input[type="text"], input[type="date"], textarea, select {
+      width: 100%;
+      padding: 0.6rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin-top: 0.3rem;
+    }
+    .radio-group {
+      display: flex;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+    .radio-group label {
+      font-weight: normal;
+    }
+    button {
+      margin-top: 1.5rem;
+      padding: 0.75rem;
+      background: #009688;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      width: 100%;
+    }
+    button:hover {
+      background: #00796b;
+    }
+    .success {
+      margin-top: 1rem;
+      color: green;
+      font-weight: bold;
+      text-align: center;
+    }
+    table {
+      width: 100%;
+      margin-top: 2rem;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0.5rem;
+      text-align: center;
+    }
+    th {
+      background-color: #e0f2f1;
+    }
+  </style>
+</head>
+<body>
+  <h2>บันทึกการตัดเลนส์ลูกค้า</h2>
+  <form id="lensForm">
+    <div class="row">
+      <div class="col">
+        <label>ชื่อ</label>
+        <input type="text" name="name">
+      </div>
+      <div class="col">
+        <label>โทร</label>
+        <input type="text" name="phone">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <label>OD</label>
+        <div class="triple-input">
+          <input type="text" name="od_sph" placeholder="SPH">
+          <input type="text" name="od_cyl" placeholder="CYL">
+          <input type="text" name="od_axis" placeholder="AXIS">
+        </div>
+      </div>
+      <div class="col">
+        <label>OS</label>
+        <div class="triple-input">
+          <input type="text" name="os_sph" placeholder="SPH">
+          <input type="text" name="os_cyl" placeholder="CYL">
+          <input type="text" name="os_axis" placeholder="AXIS">
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <label>ADD</label>
+        <input type="text" name="add">
+      </div>
+      <div class="col">
+        <label>PD</label>
+        <input type="text" name="pd">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <label>ชื่อกรอบแว่น</label>
+        <input type="text" name="frame">
+      </div>
+      <div class="col">
+        <label>วันที่สั่งตัด</label>
+        <input type="date" name="order_date" id="order_date">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <label>ประเภทเลนส์</label>
+        <input type="text" name="lens_type" placeholder="เช่น BB, BA, MC">
+      </div>
+    </div>
+
+    <label>ค่า Index ของเลนส์</label>
+    <div class="radio-group">
+      <label><input type="radio" name="index" value="1.56" checked> 1.56</label>
+      <label><input type="radio" name="index" value="1.60"> 1.60</label>
+      <label><input type="radio" name="index" value="1.67"> 1.67</label>
+      <label><input type="radio" name="index" value="1.74"> 1.74</label>
+    </div>
+
+    <label>หมายเหตุ</label>
+    <textarea name="note"></textarea>
+
+    <button type="submit">บันทึกข้อมูล</button>
+    <div class="success" id="successMsg" style="display:none;">✅ บันทึกเรียบร้อยแล้ว</div>
+  </form>
+
+  <h2>รายการลูกค้า</h2>
+  <table id="dataTable">
+    <thead>
+      <tr>
+        <th>ชื่อ</th>
+        <th>โทร</th>
+        <th>OD</th>
+        <th>OS</th>
+        <th>ADD</th>
+        <th>PD</th>
+        <th>กรอบ</th>
+        <th>วันที่</th>
+        <th>ประเภทเลนส์</th>
+        <th>Index</th>
+        <th>หมายเหตุ</th>
+        <th>แก้ไข</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById("order_date").value = today;
+    });
+  </script>
+</body>
+</html>
